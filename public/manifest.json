@@ -1,0 +1,16 @@
+{
+  "name": "Solo Sparks",
+  "short_name": "SoloSparks",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#facc15",
+  "description": "Personalized self-growth quests, reflections and rewards.",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
