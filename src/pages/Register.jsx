@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
 
@@ -13,14 +13,18 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, {
-        name,
-        email,
-        password,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/register`,
+        { name, email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       navigate("/");
     } catch (err) {
-      setError("Registration failed");
+      setError(err.response?.data?.msg || "Registration failed");
     }
   };
 
@@ -52,7 +56,7 @@ const Register = () => {
         />
         <button type="submit">Register</button>
         <p>
-          Already have an account? <a href="/">Login</a>
+          Already have an account? <Link to="/">Login</Link>
         </p>
       </form>
     </div>
