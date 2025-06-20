@@ -1,26 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { getUserProfile } from "../services/api";
+import React from "react";
+import Onboarding from "../components/Onboarding/Onboarding";
+import MoodInput from "../components/MoodInput/MoodInput";
+import QuestDisplay from "../components/QuestDisplay/QuestDisplay";
+import ReflectionForm from "../components/ReflectionForm/ReflectionForm";
+import SparkDashboard from "../components/SparkDashboard/SparkDashboard";
+import RewardStore from "../components/RewardStore/RewardStore";
+import ProgressTracker from "../components/ProgressTracker/ProgressTracker";
 
 const Dashboard = () => {
-  const [user, setUser] = useState(null);
+  const handleOnboardingComplete = (answers) => {
+    console.log("Onboarding Data:", answers);
+  };
 
-  useEffect(() => {
-    async function fetchProfile() {
-      try {
-        const profile = await getUserProfile();
-        setUser(profile);
-      } catch (err) {
-        console.error("Failed to fetch user:", err);
-      }
-    }
-
-    fetchProfile();
-  }, []);
+  const handleMoodSubmit = (mood) => {
+    console.log("Mood submitted:", mood);
+  };
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold">Welcome to Solo Sparks!</h1>
-      {user ? <p className="mt-2">Hello, {user.email}</p> : <p>Loading...</p>}
+    <div className="p-4 space-y-4">
+      <h1 className="text-2xl font-bold text-center">🧠 Solo Sparks Dashboard</h1>
+      <Onboarding onComplete={handleOnboardingComplete} />
+      <MoodInput onMoodSubmit={handleMoodSubmit} />
+      <QuestDisplay />
+      <ReflectionForm />
+      <SparkDashboard />
+      <RewardStore />
+      <ProgressTracker />
     </div>
   );
 };
