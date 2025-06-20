@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
 
@@ -14,12 +14,17 @@ const Login = () => {
     try {
       const res = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`,
-        { email, password }
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (err) {
-      setError("Login failed");
+      setError(err.response?.data?.msg || "Login failed");
     }
   };
 
@@ -44,7 +49,7 @@ const Login = () => {
         />
         <button type="submit">Login</button>
         <p>
-          Don’t have an account? <a href="/register">Register</a>
+          Don’t have an account? <Link to="/register">Register</Link>
         </p>
       </form>
     </div>
