@@ -1,31 +1,44 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../services/api";
+import axios from "axios";
+import "./Register.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await registerUser(email, password);
-      alert("Registered successfully!");
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/register`, {
+        name,
+        email,
+        password,
+      });
       navigate("/");
     } catch (err) {
-      alert("Registration failed: " + err.message);
+      setError("Registration failed");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h2 className="text-2xl mb-4">Register for Solo Sparks</h2>
-      <form onSubmit={handleRegister} className="flex flex-col gap-4 w-80">
+    <div className="register-container">
+      <form onSubmit={handleRegister} className="register-card">
+        <h2>Register</h2>
+        {error && <div className="register-error">{error}</div>}
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
         <input
           type="email"
           placeholder="Email"
-          className="p-2 border rounded"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -33,14 +46,14 @@ const Register = () => {
         <input
           type="password"
           placeholder="Password"
-          className="p-2 border rounded"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button className="bg-green-500 text-white p-2 rounded" type="submit">
-          Register
-        </button>
+        <button type="submit">Register</button>
+        <p>
+          Already have an account? <a href="/">Login</a>
+        </p>
       </form>
     </div>
   );
