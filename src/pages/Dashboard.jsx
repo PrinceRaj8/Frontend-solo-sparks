@@ -1,31 +1,13 @@
 import React from "react";
-import Onboarding from "../components/Onboarding/Onboarding";
-import MoodInput from "../components/MoodInput/MoodInput";
-import QuestDisplay from "../components/QuestDisplay/QuestDisplay";
-import ReflectionForm from "../components/ReflectionForm/ReflectionForm";
-import SparkDashboard from "../components/SparkDashboard/SparkDashboard";
-import RewardStore from "../components/RewardStore/RewardStore";
-import ProgressTracker from "../components/ProgressTracker/ProgressTracker";
+import "./Dashboard.css";
 
 const Dashboard = () => {
-  const handleOnboardingComplete = (answers) => {
-    console.log("Onboarding Data:", answers);
-  };
-
-  const handleMoodSubmit = (mood) => {
-    console.log("Mood submitted:", mood);
-  };
+  const user = localStorage.getItem("token");
 
   return (
-    <div className="p-4 space-y-4">
-      <h1 className="text-2xl font-bold text-center">🧠 Solo Sparks Dashboard</h1>
-      <Onboarding onComplete={handleOnboardingComplete} />
-      <MoodInput onMoodSubmit={handleMoodSubmit} />
-      <QuestDisplay />
-      <ReflectionForm />
-      <SparkDashboard />
-      <RewardStore />
-      <ProgressTracker />
+    <div className="dashboard">
+      <h1>Welcome to Solo Sparks Dashboard 🎉</h1>
+      <p>Your token: {user ? user.slice(0, 20) + "..." : "Not logged in"}</p>
     </div>
   );
 };
